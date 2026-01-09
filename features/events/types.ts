@@ -1,14 +1,14 @@
 export interface Event {
-  id: string;
-  title: string;
-  date: {
-    month: string;
-    day: string;
-  };
   category: string;
-  time: string;
+  created_at: string;
+  description: string;
+  end_date: string;
+  id: string;
+  image_url: string;
   location: string;
-  image: string;
-  buttonText: string;
-  isBookable: boolean;
+  start_date: string;
+  start_time: string;
+  title: string;
+  updated_at: string;
+  user_id: string;
 }

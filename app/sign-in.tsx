@@ -2,6 +2,7 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -9,6 +10,8 @@ export default function Page() {
 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showTwoFactor, setShowTwoFactor] = React.useState(false);
+  const [twoFactorCode, setTwoFactorCode] = React.useState("");
 
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
@@ -26,6 +29,23 @@ export default function Page() {
       if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
         router.replace("/");
+      } else if (signInAttempt.status === "needs_second_factor") {
+        // Check if email_code strategy is supported
+        const emailCodeFactor = signInAttempt.supportedSecondFactors?.find(
+          (factor) => factor.strategy === "email_code"
+        );
+
+        if (emailCodeFactor) {
+          // Prepare the second factor (this sends the email)
+          await signIn.prepareSecondFactor({
+            strategy: "email_code",
+            emailAddressId: emailCodeFactor.emailAddressId,
+          });
+          setShowTwoFactor(true);
+        } else {
+          console.error("No supported secondary factor found (expected email_code)");
+          console.error(JSON.stringify(signInAttempt, null, 2));
+        }
       } else {
         // If the status isn't complete, check why. User might need to
         // complete further steps.
@@ -38,8 +58,44 @@ export default function Page() {
     }
   };
 
+  const onTwoFactorPress = async () => {
+    if (!isLoaded) return;
+
+    try {
+      const signInAttempt = await signIn.attemptSecondFactor({
+        strategy: "email_code",
+        code: twoFactorCode,
+      });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/");
+      } else {
+        console.error(JSON.stringify(signInAttempt, null, 2));
+      }
+    } catch (err) {
+      console.error(JSON.stringify(err, null, 2));
+    }
+  };
+
+  if (showTwoFactor) {
+    return (
+      <SafeAreaView>
+        <Text>Verify 2FA</Text>
+        <TextInput
+          value={twoFactorCode}
+          placeholder="Enter your 2FA code"
+          onChangeText={(code) => setTwoFactorCode(code)}
+        />
+        <TouchableOpacity onPress={onTwoFactorPress}>
+          <Text>Verify</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View>
+    <SafeAreaView>
       <Text>Sign in</Text>
       <TextInput
         autoCapitalize="none"
@@ -62,6 +118,6 @@ export default function Page() {
           <Text>Sign up</Text>
         </Link>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

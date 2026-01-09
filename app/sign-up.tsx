@@ -2,6 +2,7 @@ import { useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import * as React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -70,7 +71,7 @@ export default function SignUpScreen() {
 
   if (pendingVerification) {
     return (
-      <>
+      <SafeAreaView>
         <Text>Verify your email</Text>
         <TextInput
           value={code}
@@ -80,12 +81,12 @@ export default function SignUpScreen() {
         <TouchableOpacity onPress={onVerifyPress}>
           <Text>Verify</Text>
         </TouchableOpacity>
-      </>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <>
         <Text>Sign up</Text>
         <TextInput
@@ -115,6 +116,6 @@ export default function SignUpScreen() {
           </Link>
         </View>
       </>
-    </View>
+    </SafeAreaView>
   );
 }

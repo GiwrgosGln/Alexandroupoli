@@ -12,7 +12,7 @@ export default function EventCard({ event }: { event: Event }) {
     <ThemedView style={styles.card}>
       {/* Image Section */}
       <ThemedView style={styles.imageContainer}>
-        <Image source={{ uri: event.image }} style={styles.image} />
+        <Image source={{ uri: event.image_url }} style={styles.image} />
 
         {/* Category Badge */}
         <ThemedView style={styles.categoryBadge}>
@@ -31,7 +31,7 @@ export default function EventCard({ event }: { event: Event }) {
         <ThemedView style={styles.row} backgroundColor="card">
           <Ionicons name="time-outline" size={16} color={colors.text} />
           <ThemedText style={styles.infoText}>
-            {event.date.month} {event.date.day} - {event.time}
+            {event.start_date} {event.start_time}
           </ThemedText>
         </ThemedView>
 
