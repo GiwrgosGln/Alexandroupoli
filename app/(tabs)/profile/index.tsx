@@ -1,13 +1,13 @@
 import { SignOutButton } from "@/components/sign-out-button";
 import { useUser } from "@/features/users/api/get-user";
 import { useUpdateUser } from "@/features/users/api/update-user";
-import i18n from "@/i18n";
 import { themeStorage } from "@/lib/theme-storage";
 import { useAuth } from "@clerk/clerk-expo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Switch, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -17,6 +17,7 @@ import {
 } from "react-native-unistyles";
 
 export default function ProfileScreen() {
+  const { t, i18n } = useTranslation();
   const { userId } = useAuth();
   const { theme } = useUnistyles();
   const router = useRouter();
@@ -83,10 +84,34 @@ export default function ProfileScreen() {
         <Text style={styles.username}>{user?.username}</Text>
         <Text style={styles.email}>{user?.email}</Text>
       </View>
-
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{i18n.t("preferences")}</Text>
+        <Text style={styles.sectionTitle}>{t("profile.preferences")}</Text>
         <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => {
+              console.log("Account pressed");
+            }}
+          >
+            <View style={styles.rowLeft}>
+              <MaterialCommunityIcons
+                name="account-outline"
+                size={22}
+                color="#64748B"
+              />
+              <Text style={styles.rowLabel}>{t("profile.account")}</Text>
+            </View>
+            <View style={styles.rowRight}>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={20}
+                color="#C7C7CC"
+              />
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.separator} />
+
           <View style={styles.row}>
             <View style={styles.rowLeft}>
               <MaterialCommunityIcons
@@ -94,7 +119,7 @@ export default function ProfileScreen() {
                 size={22}
                 color="#64748B"
               />
-              <Text style={styles.rowLabel}>{i18n.t("dark_mode")}</Text>
+              <Text style={styles.rowLabel}>{t("profile.dark_mode")}</Text>
             </View>
             <Switch
               value={UnistylesRuntime.themeName === "dark"}
@@ -114,7 +139,7 @@ export default function ProfileScreen() {
                 color="#64748B"
               />
               <Text style={styles.rowLabel}>
-                {i18n.t("push_notifications")}
+                {t("profile.push_notifications")}
               </Text>
             </View>
             <Switch
@@ -124,27 +149,6 @@ export default function ProfileScreen() {
               thumbColor={"#FFFFFF"}
             />
           </View>
-
-          <View style={styles.separator} />
-
-          <TouchableOpacity style={styles.row}>
-            <View style={styles.rowLeft}>
-              <MaterialCommunityIcons
-                name="currency-usd"
-                size={22}
-                color="#64748B"
-              />
-              <Text style={styles.rowLabel}>{i18n.t("currency")}</Text>
-            </View>
-            <View style={styles.rowRight}>
-              <Text style={styles.rowValue}>USD($)</Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                size={20}
-                color="#C7C7CC"
-              />
-            </View>
-          </TouchableOpacity>
 
           <View style={styles.separator} />
 
@@ -160,10 +164,13 @@ export default function ProfileScreen() {
                 size={22}
                 color="#64748B"
               />
-              <Text style={styles.rowLabel}>{i18n.t("language")}</Text>
+              <Text style={styles.rowLabel}>{t("profile.language")}</Text>
             </View>
             <View style={styles.rowRight}>
-              <Text style={styles.rowValue}>English</Text>
+              {/* Optional: Make the current language display dynamic */}
+              <Text style={styles.rowValue}>
+                {i18n.language === "el" ? "Ελληνικά" : "English"}
+              </Text>
               <MaterialCommunityIcons
                 name="chevron-right"
                 size={20}
@@ -174,7 +181,7 @@ export default function ProfileScreen() {
         </View>
       </View>
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{i18n.t("support")}</Text>
+        <Text style={styles.sectionTitle}>{t("profile.support")}</Text>
         <View style={styles.card}>
           <TouchableOpacity style={styles.row}>
             <View style={styles.rowLeft}>
@@ -183,7 +190,7 @@ export default function ProfileScreen() {
                 size={22}
                 color="#64748B"
               />
-              <Text style={styles.rowLabel}>{i18n.t("help_center")}</Text>
+              <Text style={styles.rowLabel}>{t("profile.help_center")}</Text>
             </View>
             <View style={styles.rowRight}>
               <MaterialCommunityIcons
@@ -203,7 +210,7 @@ export default function ProfileScreen() {
                 size={22}
                 color="#64748B"
               />
-              <Text style={styles.rowLabel}>{i18n.t("rate_app")}</Text>
+              <Text style={styles.rowLabel}>{t("profile.rate_app")}</Text>
             </View>
             <View style={styles.rowRight}>
               <MaterialCommunityIcons
@@ -215,12 +222,12 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
       <SignOutButton />
     </SafeAreaView>
   );
 }
 
+// ... styles remain unchanged
 const styles = StyleSheet.create((theme, rt) => ({
   container: {
     flex: 1,

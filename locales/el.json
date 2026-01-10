@@ -1,0 +1,19 @@
+{
+  "common": {
+    "logout": "Αποσύνδεση"
+  },
+  "profile": {
+    "preferences": "Προτιμήσεις",
+    "account": "Λογαριασμός",
+    "dark_mode": "Σκοτεινή λειτουργία",
+    "push_notifications": "Ειδοποιήσεις",
+    "currency": "Νόμισμα",
+    "language": "Γλώσσα",
+    "support": "Υποστήριξη",
+    "help_center": "Κέντρο βοήθειας",
+    "rate_app": "Βαθμολογήστε την εφαρμογή",
+    "choose_language": "Επιλέξτε γλώσσα",
+    "english": "English",
+    "greek": "Ελληνικά"
+  }
+}

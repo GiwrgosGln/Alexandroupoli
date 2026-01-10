@@ -1,0 +1,19 @@
+{
+  "common": {
+    "logout": "Log Out"
+  },
+  "profile": {
+    "preferences": "Preferences",
+    "account": "Account",
+    "dark_mode": "Dark Mode",
+    "push_notifications": "Push Notifications",
+    "currency": "Currency",
+    "language": "Language",
+    "support": "Support",
+    "help_center": "Help Center",
+    "rate_app": "Rate the App",
+    "choose_language": "Choose Language",
+    "english": "English",
+    "greek": "Ελληνικά"
+  }
+}
