@@ -33,5 +33,5 @@ export type MutationConfig<
 > = UseMutationOptions<
   ApiFnReturnType<MutationFnType>,
   AxiosError,
-  Parameters<MutationFnType>[1]
+  Parameters<MutationFnType>[0]
 >;

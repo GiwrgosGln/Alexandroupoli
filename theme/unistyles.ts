@@ -15,6 +15,9 @@ export const lightTheme = {
     primary: "#007AFF",
     card: "#FFFFFF",
     border: "#E5E5E5",
+    success: "#34C759",
+    warning: "#FF9500",
+    error: "#EE4444",
   },
   margins: {
     sm: 2,
@@ -35,6 +38,9 @@ export const darkTheme = {
     primary: "#0A84FF",
     card: "#1C1C1E",
     border: "#38383A",
+    success: "#34C759",
+    warning: "#FF9500",
+    error: "#EE4444",
   },
   margins: {
     sm: 2,

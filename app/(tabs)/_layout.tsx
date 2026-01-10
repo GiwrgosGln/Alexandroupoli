@@ -1,7 +1,29 @@
+import { useUser } from "@/features/users/api/get-user";
+import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Redirect, SplashScreen, Tabs } from "expo-router";
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function TabLayout() {
+  const { isSignedIn, isLoaded, userId } = useAuth();
+  const { data: user, isLoading: isUserLoading } = useUser({ userId: userId! });
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn && !isUserLoading && user) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoaded, isSignedIn, isUserLoading, user]);
+
+  if (!isLoaded || (isSignedIn && isUserLoading)) {
+    return null;
+  }
+
+  if (!isSignedIn) {
+    return <Redirect href="/sign-in" />;
+  }
+
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen

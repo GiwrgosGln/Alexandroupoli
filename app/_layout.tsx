@@ -1,10 +1,12 @@
+import { themeStorage } from "@/lib/theme-storage";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { UnistylesRuntime } from "react-native-unistyles";
 import "../theme/unistyles";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
@@ -16,6 +18,8 @@ export default function RootLayout() {
     UbuntuBold: require("../assets/fonts/Ubuntu-Bold.ttf"),
   });
 
+  const [themeLoaded, setThemeLoaded] = useState(false);
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -26,12 +30,29 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded || error) {
+    const loadTheme = async () => {
+      const savedTheme = await themeStorage.getTheme();
+      if (savedTheme) {
+        UnistylesRuntime.setAdaptiveThemes(false);
+        UnistylesRuntime.setTheme(savedTheme);
+      }
+      setThemeLoaded(true);
+    };
+
+    loadTheme();
+  }, []);
+
+  useEffect(() => {
+    if ((loaded || error) && themeLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [loaded, error, themeLoaded]);
 
   if (!loaded && !error) {
+    return null;
+  }
+
+  if (!themeLoaded) {
     return null;
   }
 

@@ -4,9 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { Event } from "../types";
 
-export const getEvents = async (client: AxiosInstance): Promise<Event[]> => {
-  const { data } = await client.get(`/events`);
-  return data;
+export const getEvents = (client: AxiosInstance): Promise<Event[]> => {
+  return client.get(`/events`);
 };
 
 type UseEventsOptions = {
