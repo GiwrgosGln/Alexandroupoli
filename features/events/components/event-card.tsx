@@ -1,66 +1,61 @@
-import ThemedText from "@/components/themed-text";
-import ThemedView from "@/components/themed-view";
-import { useTheme } from "@/context/theme-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 import { Event } from "../types";
 
 export default function EventCard({ event }: { event: Event }) {
-  const { colors } = useTheme();
-
   return (
-    <ThemedView style={styles.card}>
+    <View style={styles.card}>
       {/* Image Section */}
-      <ThemedView style={styles.imageContainer}>
+      <View style={styles.imageContainer}>
         <Image source={{ uri: event.image_url }} style={styles.image} />
 
         {/* Category Badge */}
-        <ThemedView style={styles.categoryBadge}>
-          <ThemedText style={styles.categoryText}>{event.category}</ThemedText>
-        </ThemedView>
-      </ThemedView>
+        <View style={styles.categoryBadge}>
+          <Text style={styles.categoryText}>{event.category}</Text>
+        </View>
+      </View>
 
       {/* Content Section */}
-      <ThemedView style={styles.content} backgroundColor="card">
+      <View style={styles.content}>
         {/* Title */}
-        <ThemedText style={styles.title} numberOfLines={1}>
+        <Text style={styles.title} numberOfLines={1}>
           {event.title}
-        </ThemedText>
+        </Text>
 
         {/* Date - Time */}
-        <ThemedView style={styles.row} backgroundColor="card">
-          <Ionicons name="time-outline" size={16} color={colors.text} />
-          <ThemedText style={styles.infoText}>
+        <View style={styles.row}>
+          <Ionicons name="time-outline" size={16} />
+          <Text style={styles.infoText}>
             {event.start_date} {event.start_time}
-          </ThemedText>
-        </ThemedView>
+          </Text>
+        </View>
 
         {/* Location */}
-        <ThemedView style={styles.row} backgroundColor="card">
-          <Ionicons name="location-outline" size={16} color={colors.text} />
-          <ThemedText style={styles.infoText}>{event.location}</ThemedText>
-        </ThemedView>
+        <View style={styles.row}>
+          <Ionicons name="location-outline" size={16} />
+          <Text style={styles.infoText}>{event.location}</Text>
+        </View>
 
         {/* Footer: Status & Actions */}
-        <ThemedView style={styles.footer} backgroundColor="card">
-          <ThemedText style={[styles.statusText, { color: colors.primary }]}>
-            UPCOMING
-          </ThemedText>
-          <ThemedView style={styles.actions} backgroundColor="card">
+        <View style={styles.footer}>
+          <Text style={styles.statusText}>UPCOMING</Text>
+          <View style={styles.actions}>
             <TouchableOpacity style={styles.iconButton}>
-              <Ionicons name="heart-outline" size={20} color={colors.text} />
+              <Ionicons name="heart-outline" size={20} />
             </TouchableOpacity>
-          </ThemedView>
-        </ThemedView>
-      </ThemedView>
-    </ThemedView>
+          </View>
+        </View>
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   card: {
     borderRadius: 16,
     marginBottom: 16,
+    backgroundColor: theme.colors.card,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -92,7 +87,7 @@ const styles = StyleSheet.create({
   categoryText: {
     color: "#fff",
     fontSize: 11,
-    fontWeight: "600",
+    fontFamily: theme.fonts.regular,
   },
   content: {
     flex: 1,
@@ -101,7 +96,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "700",
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.typography,
     marginBottom: 8,
   },
   row: {
@@ -112,7 +108,8 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 14,
     marginLeft: 6,
-    fontWeight: "500",
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.typography,
   },
   footer: {
     flexDirection: "row",
@@ -122,7 +119,8 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 12,
-    fontWeight: "700",
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.primary,
     letterSpacing: 0.5,
   },
   actions: {
@@ -132,4 +130,4 @@ const styles = StyleSheet.create({
   iconButton: {
     padding: 4,
   },
-});
+}));

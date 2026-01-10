@@ -1,12 +1,17 @@
 import { apiClient } from "@/axios";
 import { useAuth } from "@clerk/clerk-expo";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const useAuthClient = () => {
   const { getToken } = useAuth();
+  const interceptorRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const requestIntercept = apiClient.interceptors.request.use(
+    if (interceptorRef.current !== null) {
+      apiClient.interceptors.request.eject(interceptorRef.current);
+    }
+
+    interceptorRef.current = apiClient.interceptors.request.use(
       async (config) => {
         const token = await getToken();
         if (token) {
@@ -18,7 +23,10 @@ export const useAuthClient = () => {
     );
 
     return () => {
-      apiClient.interceptors.request.eject(requestIntercept);
+      if (interceptorRef.current !== null) {
+        apiClient.interceptors.request.eject(interceptorRef.current);
+        interceptorRef.current = null;
+      }
     };
   }, [getToken]);
 

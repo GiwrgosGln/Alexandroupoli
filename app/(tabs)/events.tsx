@@ -1,15 +1,10 @@
-import { ThemeColors, useTheme } from "@/context/theme-context";
 import { useEvents } from "@/features/events/api/get-events";
 import EventCard from "@/features/events/components/event-card";
-import { useMemo } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function EventsScreen() {
-  const { colors } = useTheme();
   const { data: events } = useEvents();
-
-  // Initialize styles with the current theme colors
-  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -20,11 +15,10 @@ export default function EventsScreen() {
   );
 }
 
-const createStyles = (colors: ThemeColors) =>
-  StyleSheet.create({
-    container: {
-      padding: 20,
-      backgroundColor: colors.background,
-      paddingTop: 60,
-    },
-  });
+const styles = StyleSheet.create((theme) => ({
+  container: {
+    padding: 20,
+    backgroundColor: theme.colors.background,
+    paddingTop: 60,
+  },
+}));
