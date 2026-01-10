@@ -1,4 +1,4 @@
-import { apiClient } from "@/axios";
+import { apiClient } from "@/lib/api-client";
 import { useAuth } from "@clerk/clerk-expo";
 import { useEffect, useRef } from "react";
 
