@@ -16,6 +16,20 @@ export default function ProfileLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="help-center"
+        options={{
+          title: "Language",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="account"
+        options={{
+          title: "Account",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

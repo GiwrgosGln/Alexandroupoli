@@ -70,26 +70,26 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     backgroundColor: theme.colors.background,
     padding: 16,
-    gap: 12, // Adds space between items
+    gap: 12,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: theme.colors.primary, // Assuming you have a text color in theme
+    color: theme.colors.primary,
     marginBottom: 20,
     textAlign: "center",
   },
   button: {
     padding: 16,
     borderRadius: 12,
-    backgroundColor: theme.colors.card || "#f0f0f0", // Fallback color if card isn't defined
+    backgroundColor: theme.colors.card,
     borderWidth: 1,
     borderColor: "transparent",
     alignItems: "center",
   },
   activeButton: {
-    borderColor: theme.colors.primary || "#007AFF", // Highlight border for selected
-    backgroundColor: (theme.colors.primary || "#007AFF") + "20", // Slight tint
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary + "20",
   },
   text: {
     fontSize: 16,
@@ -97,6 +97,6 @@ const styles = StyleSheet.create((theme) => ({
   },
   activeText: {
     fontWeight: "bold",
-    color: theme.colors.primary || "#007AFF",
+    color: theme.colors.primary,
   },
 }));

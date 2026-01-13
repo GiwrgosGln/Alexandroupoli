@@ -1,9 +1,12 @@
+import { formatDateToDDMMYYYY, formatTime } from "@/helpers/date-helper";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Event } from "../types";
 
 export default function EventCard({ event }: { event: Event }) {
+  const displayDate = formatDateToDDMMYYYY(event.start_date);
+  const displayTime = formatTime(event.start_time);
   return (
     <View style={styles.card}>
       {/* Image Section */}
@@ -27,7 +30,7 @@ export default function EventCard({ event }: { event: Event }) {
         <View style={styles.row}>
           <Ionicons name="time-outline" size={16} />
           <Text style={styles.infoText}>
-            {event.start_date} {event.start_time}
+            {displayDate} {displayTime}
           </Text>
         </View>
 

@@ -90,7 +90,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             style={styles.row}
             onPress={() => {
-              console.log("Account pressed");
+              router.push("/profile/account");
             }}
           >
             <View style={styles.rowLeft}>
@@ -183,7 +183,12 @@ export default function ProfileScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>{t("profile.support")}</Text>
         <View style={styles.card}>
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => {
+              router.push("/profile/help-center");
+            }}
+          >
             <View style={styles.rowLeft}>
               <MaterialCommunityIcons
                 name="help-circle-outline"
@@ -203,7 +208,12 @@ export default function ProfileScreen() {
 
           <View style={styles.separator} />
 
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => {
+              console.log("TODO: Implement expo-store-review to rate the app");
+            }}
+          >
             <View style={styles.rowLeft}>
               <MaterialCommunityIcons
                 name="star-outline"
